@@ -2,7 +2,7 @@
 ## Conversione Binario Decimale: Regole, Tabella e 100 Esercizi con Soluzione
 
 ```markdown
-[Clicca qui](https://salvatorecapolupo.github.io/binary-subnet)
+[https://salvatorecapolupo.github.io/binary-subnet](Clicca qui)
 ```
 
 Snippet HTML da inserire in `modulo_3.html` del corso *Sistemi e Reti*.
