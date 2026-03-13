@@ -1,0 +1,832 @@
+<html>
+<title> Conversione Binario Decimale: Regole, Tabella e 100 Esercizi con Soluzione </title>
+  
+<!-- ============================================================
+     FAQ: Conversione Binario ↔ Decimale
+     Da inserire in modulo_3.html prima del tag </main> o </body>
+     ============================================================ -->
+
+<style>
+  #faq-binario-decimale {
+    font-family: 'Courier New', Courier, monospace;
+  }
+  #faq-binario-decimale h2,
+  #faq-binario-decimale h3,
+  #faq-binario-decimale h4 {
+    font-family: 'Courier New', Courier, monospace;
+  }
+  #faq-binario-decimale .sol {
+    display: inline-block;
+    background: #222;
+    color: #222;
+    border-radius: 3px;
+    padding: 1px 8px;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  #faq-binario-decimale .sol.visible {
+    color: #00ff88;
+  }
+  #faq-binario-decimale .sol code {
+    color: inherit;
+    background: transparent;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  #faq-binario-decimale .badge {
+    display: inline-block;
+    font-size: 0.78em;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: #1a1a2e;
+    color: #7ecfff;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: nowrap;
+  }
+  #faq-binario-decimale table {
+    font-family: 'Courier New', Courier, monospace;
+  }
+  #faq-binario-decimale #esercizi-table td,
+  #faq-binario-decimale #esercizi-table th {
+    padding: 4px 12px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  #faq-binario-decimale #esercizi-table tr:nth-child(even) {
+    background: #f7f9fc;
+  }
+</style>
+
+<section id="faq-binario-decimale">
+  <h2>5. FAQ: Conversione Rapida Binario ↔ Decimale</h2>
+
+  <p>
+    Questa sezione raccoglie le regole mnemoniche essenziali per convertire
+    a mente un ottetto binario in decimale (e viceversa), indispensabili
+    sia per leggere le subnet mask che per calcolare qualsiasi indirizzo IPv4.
+  </p>
+
+  <!-- ── REGOLA GENERALE ─────────────────────────────────────── -->
+  <h3>Regola generale: la tabella delle posizioni/esponenti</h3>
+
+  <p>
+    Ogni bit di un ottetto occupa una <strong>posizione</strong> (contando da destra,
+    a partire da 0) che coincide con l'<strong>esponente</strong> di 2 che ne determina
+    il peso. Il decimale si ottiene <strong>sommando i pesi di tutti i bit a&nbsp;1</strong>.
+  </p>
+
+  <table style="margin: 1.2em auto; border-collapse: collapse; text-align: center;">
+    <thead>
+      <tr>
+        <th style="padding: 6px 14px; border: 1px solid #ccc; background: #f0f4f8;">Posizione / Esponente</th>
+        <td style="padding: 6px 14px; border: 1px solid #ccc; background: #f0f4f8;">2<sup>7</sup></td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc; background: #f0f4f8;">2<sup>6</sup></td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc; background: #f0f4f8;">2<sup>5</sup></td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc; background: #f0f4f8;">2<sup>4</sup></td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc; background: #f0f4f8;">2<sup>3</sup></td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc; background: #f0f4f8;">2<sup>2</sup></td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc; background: #f0f4f8;">2<sup>1</sup></td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc; background: #f0f4f8;">2<sup>0</sup></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th style="padding: 6px 14px; border: 1px solid #ccc;">Valore decimale</th>
+        <td style="padding: 6px 14px; border: 1px solid #ccc;">128</td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc;">64</td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc;">32</td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc;">16</td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc;">8</td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc;">4</td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc;">2</td>
+        <td style="padding: 6px 14px; border: 1px solid #ccc;">1</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    <strong>Mnemonica:</strong> parti da 1 e <em>raddoppia verso sinistra</em>
+    — <code>1, 2, 4, 8, 16, 32, 64, 128</code>. Bastano i primi quattro
+    (<code>1-2-4-8</code>), poi si raddoppia ancora quattro volte.
+  </p>
+
+  <h3>Esempi di conversione</h3>
+
+  <p><strong>Da binario a decimale:</strong></p>
+  <ul>
+    <li>
+      <code>10110100</code> — bit a 1 in 2<sup>7</sup>, 2<sup>5</sup>, 2<sup>4</sup>, 2<sup>2</sup>
+      → 128 + 32 + 16 + 4 = <strong>180</strong>
+    </li>
+    <li>
+      <code>01001101</code> — bit a 1 in 2<sup>6</sup>, 2<sup>3</sup>, 2<sup>2</sup>, 2<sup>0</sup>
+      → 64 + 8 + 4 + 1 = <strong>77</strong>
+    </li>
+    <li>
+      <code>11010010</code> — bit a 1 in 2<sup>7</sup>, 2<sup>6</sup>, 2<sup>4</sup>, 2<sup>1</sup>
+      → 128 + 64 + 16 + 2 = <strong>210</strong>
+    </li>
+  </ul>
+
+  <p><strong>Da decimale a binario</strong> (strategia: sottrai la potenza di 2 più grande che ci sta, ripeti sul resto):</p>
+  <ul>
+    <li>
+      <strong>100</strong> → 64 (resto 36) → 32 (resto 4) → 4 (resto 0)
+      — posizioni 2<sup>6</sup>, 2<sup>5</sup>, 2<sup>2</sup> = <code>01100100</code>
+    </li>
+    <li>
+      <strong>57</strong> → 32 (resto 25) → 16 (resto 9) → 8 (resto 1) → 1 (resto 0)
+      — posizioni 2<sup>5</sup>, 2<sup>4</sup>, 2<sup>3</sup>, 2<sup>0</sup> = <code>00111001</code>
+    </li>
+    <li>
+      <strong>195</strong> → 128 (resto 67) → 64 (resto 3) → 2 (resto 1) → 1 (resto 0)
+      — posizioni 2<sup>7</sup>, 2<sup>6</sup>, 2<sup>1</sup>, 2<sup>0</sup> = <code>11000011</code>
+    </li>
+  </ul>
+
+  <!-- ── SUBNET MASK ────────────────────────────────────────── -->
+  <h3>I valori della Subnet Mask: tre casi da riconoscere a colpo d'occhio</h3>
+
+  <p>
+    Un ottetto di subnet mask è sempre composto da un blocco continuo di <code>1</code>
+    seguito da un blocco continuo di <code>0</code>. Questo vincolo strutturale riduce
+    i valori decimali possibili a soli 9: <code>0, 128, 192, 224, 240, 248, 252, 254, 255</code>.
+    A seconda di dove si trova l'ottetto nella maschera, si ricade in uno di tre casi.
+  </p>
+
+  <h4>Caso 1 — Ottetti fissi: 255 e 0</h4>
+  <p>
+    Gli ottetti interamente a <code>1</code> (<code>11111111</code> = <strong>255</strong>)
+    e interamente a <code>0</code> (<code>00000000</code> = <strong>0</strong>) non richiedono
+    alcun calcolo: sono i valori di confine della maschera e si riconoscono immediatamente.
+    In <code>255.255.255.0</code>, i primi tre ottetti e l'ultimo appartengono a questo caso.
+  </p>
+
+  <h4>Caso 2 — Ottetto con uni iniziali e zeri finali (il caso tipico)</h4>
+  <p>
+    Sono gli ottetti del tipo <code>11111110</code>, <code>11111000</code>, <code>11110000</code> ecc.
+    Il numero di zeri finali <em>n</em> indica quanti bit host sono ancora liberi in quell'ottetto.
+    La formula diretta è:
+  </p>
+  <p style="text-align: center; font-size: 1.1em; margin: 1em 0;">
+    <strong>decimale = 256 − 2<sup><em>n</em></sup></strong>
+    &nbsp;&nbsp; dove <em>n</em> = numero di <strong>zeri finali</strong>
+  </p>
+  <p>
+    Esempio: <code>11111000</code> ha 3 zeri finali → 256 − 2<sup>3</sup> = 256 − 8 = <strong>248</strong>.
+  </p>
+
+  <table style="margin: 1.2em auto; border-collapse: collapse; text-align: center;">
+    <thead>
+      <tr style="background: #f0f4f8;">
+        <th style="padding: 6px 18px; border: 1px solid #ccc;">Binario</th>
+        <th style="padding: 6px 18px; border: 1px solid #ccc;">Zeri finali (<em>n</em>)</th>
+        <th style="padding: 6px 18px; border: 1px solid #ccc;">256 − 2<sup><em>n</em></sup></th>
+        <th style="padding: 6px 18px; border: 1px solid #ccc;">Decimale</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding:5px 18px;border:1px solid #ccc;">10000000</td><td style="padding:5px 18px;border:1px solid #ccc;">7</td><td style="padding:5px 18px;border:1px solid #ccc;">256 − 128</td><td style="padding:5px 18px;border:1px solid #ccc;"><strong>128</strong></td></tr>
+      <tr><td style="padding:5px 18px;border:1px solid #ccc;">11000000</td><td style="padding:5px 18px;border:1px solid #ccc;">6</td><td style="padding:5px 18px;border:1px solid #ccc;">256 − 64</td><td style="padding:5px 18px;border:1px solid #ccc;"><strong>192</strong></td></tr>
+      <tr><td style="padding:5px 18px;border:1px solid #ccc;">11100000</td><td style="padding:5px 18px;border:1px solid #ccc;">5</td><td style="padding:5px 18px;border:1px solid #ccc;">256 − 32</td><td style="padding:5px 18px;border:1px solid #ccc;"><strong>224</strong></td></tr>
+      <tr><td style="padding:5px 18px;border:1px solid #ccc;">11110000</td><td style="padding:5px 18px;border:1px solid #ccc;">4</td><td style="padding:5px 18px;border:1px solid #ccc;">256 − 16</td><td style="padding:5px 18px;border:1px solid #ccc;"><strong>240</strong></td></tr>
+      <tr><td style="padding:5px 18px;border:1px solid #ccc;">11111000</td><td style="padding:5px 18px;border:1px solid #ccc;">3</td><td style="padding:5px 18px;border:1px solid #ccc;">256 − 8</td><td style="padding:5px 18px;border:1px solid #ccc;"><strong>248</strong></td></tr>
+      <tr><td style="padding:5px 18px;border:1px solid #ccc;">11111100</td><td style="padding:5px 18px;border:1px solid #ccc;">2</td><td style="padding:5px 18px;border:1px solid #ccc;">256 − 4</td><td style="padding:5px 18px;border:1px solid #ccc;"><strong>252</strong></td></tr>
+      <tr><td style="padding:5px 18px;border:1px solid #ccc;">11111110</td><td style="padding:5px 18px;border:1px solid #ccc;">1</td><td style="padding:5px 18px;border:1px solid #ccc;">256 − 2</td><td style="padding:5px 18px;border:1px solid #ccc;"><strong>254</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h4>Caso 3 — Bit misti: non è una subnet mask valida</h4>
+  <p>
+    Se un ottetto non rientra nei casi precedenti — ovvero contiene alternanze di 0 e 1
+    non riconducibili al pattern <em>uni compatti seguiti da zeri compatti</em> — allora
+    non è un ottetto di subnet mask legittimo. Per convertirlo in decimale si usa la
+    regola generale (somma dei pesi), ma il risultato non comparirà mai tra i 9 valori
+    ammissibili. Questo rende la regola anche un <strong>test di validità istantaneo</strong>:
+    se il decimale non è uno dei 9 valori ammissibili, la maschera è malformata.
+    Ad esempio, <code>255.255.255.150</code> non è una subnet mask valida perché
+    150 = <code>10010110</code>, che presenta bit alternati.
+  </p>
+
+  <!-- ── ESERCIZI ───────────────────────────────────────────── -->
+  <h3>Esercizi (100): clicca sulla casella per scoprire la soluzione</h3>
+
+  <p>I primi 50 esercizi convertono da binario a decimale, i successivi 50 da decimale a binario.
+  Clicca sulla cella <span class="sol" style="display:inline-block;background:#222;color:#222;border-radius:3px;padding:1px 8px;cursor:pointer;">soluzione</span> per rivelarla.</p>
+
+  <table id="esercizi-table" style="margin: 1.2em auto; border-collapse: collapse;">
+    <thead>
+      <tr style="background: #f0f4f8;">
+        <th style="padding:4px 12px;border:1px solid #ccc;">#</th>
+        <th style="padding:4px 12px;border:1px solid #ccc;">Tipo</th>
+        <th style="padding:4px 12px;border:1px solid #ccc;">Domanda</th>
+        <th style="padding:4px 12px;border:1px solid #ccc;">Soluzione</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00111001</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>57</code></span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00001100</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>12</code></span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>10001100</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>140</code></span></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01111101</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>125</code></span></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01110010</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>114</code></span></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01000111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>71</code></span></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00110100</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>52</code></span></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00101100</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>44</code></span></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>11011000</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>216</code></span></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00010000</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>16</code></span></td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00001111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>15</code></span></td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00101111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>47</code></span></td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01101111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>111</code></span></td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01110111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>119</code></span></td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00001101</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>13</code></span></td>
+      </tr>
+      <tr>
+        <td>16</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01100101</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>101</code></span></td>
+      </tr>
+      <tr>
+        <td>17</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>11010110</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>214</code></span></td>
+      </tr>
+      <tr>
+        <td>18</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01110000</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>112</code></span></td>
+      </tr>
+      <tr>
+        <td>19</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>11100101</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>229</code></span></td>
+      </tr>
+      <tr>
+        <td>20</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>10001110</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>142</code></span></td>
+      </tr>
+      <tr>
+        <td>21</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00000011</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>3</code></span></td>
+      </tr>
+      <tr>
+        <td>22</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01010001</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>81</code></span></td>
+      </tr>
+      <tr>
+        <td>23</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>11011000</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>216</code></span></td>
+      </tr>
+      <tr>
+        <td>24</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>10101110</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>174</code></span></td>
+      </tr>
+      <tr>
+        <td>25</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>10001110</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>142</code></span></td>
+      </tr>
+      <tr>
+        <td>26</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01001111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>79</code></span></td>
+      </tr>
+      <tr>
+        <td>27</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01101110</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>110</code></span></td>
+      </tr>
+      <tr>
+        <td>28</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>10101100</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>172</code></span></td>
+      </tr>
+      <tr>
+        <td>29</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00110100</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>52</code></span></td>
+      </tr>
+      <tr>
+        <td>30</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00101111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>47</code></span></td>
+      </tr>
+      <tr>
+        <td>31</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>11000010</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>194</code></span></td>
+      </tr>
+      <tr>
+        <td>32</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00110001</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>49</code></span></td>
+      </tr>
+      <tr>
+        <td>33</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>10110111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>183</code></span></td>
+      </tr>
+      <tr>
+        <td>34</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>10110000</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>176</code></span></td>
+      </tr>
+      <tr>
+        <td>35</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>10000111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>135</code></span></td>
+      </tr>
+      <tr>
+        <td>36</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00010110</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>22</code></span></td>
+      </tr>
+      <tr>
+        <td>37</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>11101011</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>235</code></span></td>
+      </tr>
+      <tr>
+        <td>38</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00111111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>63</code></span></td>
+      </tr>
+      <tr>
+        <td>39</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>11000001</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>193</code></span></td>
+      </tr>
+      <tr>
+        <td>40</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00101000</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>40</code></span></td>
+      </tr>
+      <tr>
+        <td>41</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>10010110</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>150</code></span></td>
+      </tr>
+      <tr>
+        <td>42</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>10111001</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>185</code></span></td>
+      </tr>
+      <tr>
+        <td>43</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01100010</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>98</code></span></td>
+      </tr>
+      <tr>
+        <td>44</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00100011</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>35</code></span></td>
+      </tr>
+      <tr>
+        <td>45</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00010111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>23</code></span></td>
+      </tr>
+      <tr>
+        <td>46</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01110100</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>116</code></span></td>
+      </tr>
+      <tr>
+        <td>47</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>10010100</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>148</code></span></td>
+      </tr>
+      <tr>
+        <td>48</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00101000</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>40</code></span></td>
+      </tr>
+      <tr>
+        <td>49</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>01110111</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>119</code></span></td>
+      </tr>
+      <tr>
+        <td>50</td>
+        <td><span class="badge">bin → dec</span></td>
+        <td><code>00110011</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>51</code></span></td>
+      </tr>
+      <tr>
+        <td>51</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>194</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11000010</code></span></td>
+      </tr>
+      <tr>
+        <td>52</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>142</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10001110</code></span></td>
+      </tr>
+      <tr>
+        <td>53</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>232</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11101000</code></span></td>
+      </tr>
+      <tr>
+        <td>54</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>186</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10111010</code></span></td>
+      </tr>
+      <tr>
+        <td>55</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>83</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01010011</code></span></td>
+      </tr>
+      <tr>
+        <td>56</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>189</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10111101</code></span></td>
+      </tr>
+      <tr>
+        <td>57</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>181</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10110101</code></span></td>
+      </tr>
+      <tr>
+        <td>58</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>107</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01101011</code></span></td>
+      </tr>
+      <tr>
+        <td>59</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>136</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10001000</code></span></td>
+      </tr>
+      <tr>
+        <td>60</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>36</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>00100100</code></span></td>
+      </tr>
+      <tr>
+        <td>61</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>87</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01010111</code></span></td>
+      </tr>
+      <tr>
+        <td>62</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>125</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01111101</code></span></td>
+      </tr>
+      <tr>
+        <td>63</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>83</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01010011</code></span></td>
+      </tr>
+      <tr>
+        <td>64</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>236</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11101100</code></span></td>
+      </tr>
+      <tr>
+        <td>65</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>194</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11000010</code></span></td>
+      </tr>
+      <tr>
+        <td>66</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>138</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10001010</code></span></td>
+      </tr>
+      <tr>
+        <td>67</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>112</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01110000</code></span></td>
+      </tr>
+      <tr>
+        <td>68</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>166</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10100110</code></span></td>
+      </tr>
+      <tr>
+        <td>69</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>28</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>00011100</code></span></td>
+      </tr>
+      <tr>
+        <td>70</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>117</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01110101</code></span></td>
+      </tr>
+      <tr>
+        <td>71</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>16</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>00010000</code></span></td>
+      </tr>
+      <tr>
+        <td>72</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>161</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10100001</code></span></td>
+      </tr>
+      <tr>
+        <td>73</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>205</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11001101</code></span></td>
+      </tr>
+      <tr>
+        <td>74</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>137</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10001001</code></span></td>
+      </tr>
+      <tr>
+        <td>75</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>33</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>00100001</code></span></td>
+      </tr>
+      <tr>
+        <td>76</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>108</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01101100</code></span></td>
+      </tr>
+      <tr>
+        <td>77</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>161</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10100001</code></span></td>
+      </tr>
+      <tr>
+        <td>78</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>108</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01101100</code></span></td>
+      </tr>
+      <tr>
+        <td>79</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>255</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11111111</code></span></td>
+      </tr>
+      <tr>
+        <td>80</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>202</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11001010</code></span></td>
+      </tr>
+      <tr>
+        <td>81</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>234</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11101010</code></span></td>
+      </tr>
+      <tr>
+        <td>82</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>73</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01001001</code></span></td>
+      </tr>
+      <tr>
+        <td>83</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>135</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10000111</code></span></td>
+      </tr>
+      <tr>
+        <td>84</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>71</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01000111</code></span></td>
+      </tr>
+      <tr>
+        <td>85</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>126</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01111110</code></span></td>
+      </tr>
+      <tr>
+        <td>86</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>134</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10000110</code></span></td>
+      </tr>
+      <tr>
+        <td>87</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>219</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11011011</code></span></td>
+      </tr>
+      <tr>
+        <td>88</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>204</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11001100</code></span></td>
+      </tr>
+      <tr>
+        <td>89</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>185</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>10111001</code></span></td>
+      </tr>
+      <tr>
+        <td>90</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>112</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01110000</code></span></td>
+      </tr>
+      <tr>
+        <td>91</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>70</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01000110</code></span></td>
+      </tr>
+      <tr>
+        <td>92</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>252</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11111100</code></span></td>
+      </tr>
+      <tr>
+        <td>93</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>46</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>00101110</code></span></td>
+      </tr>
+      <tr>
+        <td>94</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>24</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>00011000</code></span></td>
+      </tr>
+      <tr>
+        <td>95</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>56</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>00111000</code></span></td>
+      </tr>
+      <tr>
+        <td>96</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>78</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01001110</code></span></td>
+      </tr>
+      <tr>
+        <td>97</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>81</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>01010001</code></span></td>
+      </tr>
+      <tr>
+        <td>98</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>216</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11011000</code></span></td>
+      </tr>
+      <tr>
+        <td>99</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>32</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>00100000</code></span></td>
+      </tr>
+      <tr>
+        <td>100</td>
+        <td><span class="badge">dec → bin</span></td>
+        <td><code>197</code> → ?</td>
+        <td><span class="sol" onclick="this.classList.toggle('visible')"><code>11000101</code></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+</section>
+
+</html>
