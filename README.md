@@ -1,6 +1,10 @@
 # Binary Subnet
 ## Conversione Binario Decimale: Regole, Tabella e 100 Esercizi con Soluzione
 
+```markdown
+[Clicca qui](https://salvatorecapolupo.github.io/binary-subnet)
+```
+
 Snippet HTML da inserire in `modulo_3.html` del corso *Sistemi e Reti*.
 Aggiunge una sezione FAQ autonoma sulla conversione binario ↔ decimale,
 con regole mnemoniche, trattazione della subnet mask e 100 esercizi interattivi.
